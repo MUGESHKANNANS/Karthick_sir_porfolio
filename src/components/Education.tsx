@@ -6,16 +6,8 @@ import bharathLogo from '../assets/Education/logo_face_book.png';
 import kluLogo from '../assets/Education/klu.png';
 
 const Education: React.FC = () => {
-  type EducationItem = {
-    institution: string;
-    degree: string;
-    year: string;
-    specialization?: string;
-    type: string;
-    logo: string;
-  };
 
-  const educationData: EducationItem[] = [
+  const educationData = [
     {
       institution: "Alagappa University, Karaikudi",
       degree: "Doctor of Philosophy (Ph.D.) – Computer Science",

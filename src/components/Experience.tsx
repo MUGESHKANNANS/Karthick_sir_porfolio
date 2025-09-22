@@ -7,14 +7,7 @@ import wiproLogo from '../assets/education/wipro.svg';
 import cmsLogo from '../assets/education/cms.jfif';
 
 const Experience: React.FC = () => {
-  type ExperienceItem = {
-    company: string;
-    role: string;
-    duration: string;
-    type: string;
-    logo: string;
-  };
-  const academicExperience: ExperienceItem[] = [
+  const academicExperience = [
     {
       company: "KPR Institute of Engineering & Technology (KPR IET)",
       role: "Associate Professor",
@@ -38,7 +31,7 @@ const Experience: React.FC = () => {
     }
   ];
 
-  const industrialExperience: ExperienceItem[] = [
+  const industrialExperience = [
     {
       company: "Wipro InfoTech",
       role: "Project Engineer @ RBS BANK",
