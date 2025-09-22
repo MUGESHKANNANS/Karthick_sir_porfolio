@@ -1,22 +1,18 @@
 import React from 'react';
 import { Building, Calendar, Briefcase, Users } from 'lucide-react';
+import kprLogo from '../assets/education/kpr.jfif';
+import lpuLogo from '../assets/education/lpu.png';
+import vcasLogo from '../assets/education/vcas.jfif';
+import wiproLogo from '../assets/education/wipro.svg';
+import cmsLogo from '../assets/education/cms.jfif';
 
 const Experience: React.FC = () => {
-  const experienceImages = import.meta.glob('../assets/education/*', { eager: true, as: 'url' }) as Record<string, string>;
-
-  const resolveLogo = (logo: string, company: string): string => {
-    if (logo && logo.startsWith('../assets/education/')) {
-      const resolved = experienceImages[logo];
-      if (resolved) return resolved;
-      const logoBase = logo.split('\\').pop()?.split('/').pop();
-      if (logoBase) {
-        const matchByName = Object.entries(experienceImages).find(([path]) => {
-          const keyBase = path.split('\\').pop()?.split('/').pop();
-          return keyBase?.toLowerCase() === logoBase.toLowerCase();
-        });
-        if (matchByName) return matchByName[1];
-      }
-    }
+  const resolveLogo = (logo: string): string => {
+    if (logo.toLowerCase().includes('kpr')) return kprLogo;
+    if (logo.toLowerCase().includes('lpu')) return lpuLogo;
+    if (logo.toLowerCase().includes('vcas')) return vcasLogo;
+    if (logo.toLowerCase().includes('wipro')) return wiproLogo;
+    if (logo.toLowerCase().includes('cms')) return cmsLogo;
     return logo;
   };
   const academicExperience = [
@@ -25,21 +21,21 @@ const Experience: React.FC = () => {
       role: "Associate Professor",
       duration: "Present",
       type: "current",
-      logo: "../assets/education/kpr.jfif"
+      logo: {kprLogo}
     },
     {
       company: "Lovely Professional University (LPU)",
       role: "Assistant Professor",
       duration: "2022 – 2025",
       type: "academic",
-      logo: "../assets/education/lpu.png"
+      logo: {lpuLogo}
     },
     {
       company: "VCAS",
       role: "Head of Department",
       duration: "2018 – 2022",
       type: "academic",
-      logo: "../assets/education/vcas.jfif"
+      logo: {vcasLogo}
     }
   ];
 
@@ -49,21 +45,21 @@ const Experience: React.FC = () => {
       role: "Project Engineer @ RBS BANK",
       duration: "2016 – 2018",
       type: "industry",
-      logo: "../assets/education/wipro.svg"
+      logo: {wiproLogo}
     },
     {
       company: "Wipro InfoTech",
       role: "Team Leader @ RBS BANK",
       duration: "2014 – 2016",
       type: "leadership",
-      logo: "../assets/education/wipro.svg"
+      logo: {wiproLogo}
     },
     {
       company: "CMS Info System",
       role: "Server Engineer",
       duration: "2012 – 2014",
       type: "technical",
-      logo: "../assets/education/cms.jfif"
+      logo: {cmsLogo}
     }
   ];
 
@@ -121,7 +117,7 @@ const Experience: React.FC = () => {
         <div className="flex-shrink-0">
           <div className="w-16 h-16 bg-white rounded-lg flex items-center justify-center overflow-hidden shadow-lg border-2 border-gray-200 dark:border-gray-600">
             <img 
-              src={resolveLogo(item.logo, item.company)} 
+              src={resolveLogo(item.logo)} 
               alt={`${item.company} logo`}
               className="w-full h-full object-contain p-1"
               onError={(e) => {

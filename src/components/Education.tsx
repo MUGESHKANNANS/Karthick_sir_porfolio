@@ -1,34 +1,16 @@
 import React from 'react';
 import { GraduationCap, Award, Calendar } from 'lucide-react';
+import issatLogo from '../assets/education/issat-logo.png';
+import ugcLogo from '../assets/education/ugc.jpg';
+import bharathLogo from '../assets/education/logo_face_book.png';
+import kluLogo from '../assets/education/klu.png';
 
 const Education: React.FC = () => {
-  const educationImages = import.meta.glob('../assets/education/*', { eager: true, as: 'url' }) as Record<string, string>;
-
-  const findLocalLogo = (institution: string): string | undefined => {
-    const slug = institution.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-    const match = Object.entries(educationImages).find(([path]) => path.toLowerCase().includes(slug));
-    return match?.[1];
-  };
-
-  const resolveLogo = (logo: string, institution: string): string => {
-    // If a direct file under assets/education is provided, resolve via glob map
-    if (logo && logo.startsWith('../assets/education/')) {
-      const resolved = educationImages[logo];
-      if (resolved) return resolved;
-      // Try by filename basename match if the relative key differs
-      const logoBase = logo.split('\\').pop()?.split('/').pop();
-      if (logoBase) {
-        const matchByName = Object.entries(educationImages).find(([path]) => {
-          const keyBase = path.split('\\').pop()?.split('/').pop();
-          return keyBase?.toLowerCase() === logoBase.toLowerCase();
-        });
-        if (matchByName) return matchByName[1];
-      }
-    }
-    // Else try to match by institution slug
-    const byInstitution = findLocalLogo(institution);
-    if (byInstitution) return byInstitution;
-    // Fallback to original value (external URL or public path)
+  const resolveLogo = (logo: string): string => {
+    if (logo.includes('issat-logo')) return issatLogo;
+    if (logo.toLowerCase().includes('ugc')) return ugcLogo;
+    if (logo.toLowerCase().includes('logo_face_book')) return bharathLogo;
+    if (logo.toLowerCase().includes('klu')) return kluLogo;
     return logo;
   };
 
@@ -39,7 +21,7 @@ const Education: React.FC = () => {
       year: "2024",
       specialization: "Artificial Intelligence & Machine Learning",
       type: "doctorate",
-      logo: "../assets/education/issat-logo.png"
+      logo: {issatLogo}
     },
     {
       institution: "NTA UGC NET Exam (Computer Science & Applications)",
@@ -47,21 +29,21 @@ const Education: React.FC = () => {
       year: "2019",
       specialization: "Qualified with 95.8%",
       type: "certification",
-      logo: "../assets/education/ugc.jpg"
+      logo: {ugcLogo}
     },
     {
       institution: "Bharath University, Chennai",
       degree: "Master of Technology (M.Tech.) – Computer Science & Engineering",
       year: "2017",
       type: "masters",
-      logo: "../assets/education/logo_face_book.png"
+      logo: {bharathLogo}
     },
     {
       institution: "Kalasalingam University, Krishnankoil, Tamil Nadu",
       degree: "Bachelor of Technology (B.Tech.) – Computer Science & Engineering",
       year: "2012",
       type: "bachelors",
-      logo: "../assets/education/klu.png"
+      logo: {kluLogo}
     }
   ];
 
@@ -133,7 +115,7 @@ const Education: React.FC = () => {
                   <div className="flex-shrink-0">
                     <div className="w-32 h-32 bg-white rounded-lg flex items-center justify-center overflow-hidden shadow-lg border-2 border-gray-200 dark:border-gray-600">
                       <img 
-                        src={resolveLogo(item.logo, item.institution)} 
+                        src={resolveLogo(item.logo)} 
                         alt={`${item.institution} logo`}
                         className="w-full h-full object-contain p-2"
                         onError={(e) => {

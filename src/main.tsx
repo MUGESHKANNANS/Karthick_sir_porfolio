@@ -3,10 +3,19 @@ import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
 import faviconUrl from './assets/image.png';
+import ErrorBoundary from './components/ErrorBoundary';
 
-createRoot(document.getElementById('root')!).render(
+const rootEl = document.getElementById('root');
+if (!rootEl) {
+  // eslint-disable-next-line no-console
+  console.error('Root element not found');
+}
+
+createRoot(rootEl!).render(
   <StrictMode>
-    <App />
+    <ErrorBoundary>
+      <App />
+    </ErrorBoundary>
   </StrictMode>
 );
 
@@ -22,3 +31,6 @@ const ensureFavicon = () => {
 };
 
 ensureFavicon();
+
+// eslint-disable-next-line no-console
+console.log('App bootstrapped');

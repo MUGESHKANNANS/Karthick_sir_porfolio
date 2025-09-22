@@ -1,15 +1,9 @@
 import React from 'react';
 import { Award, BookOpen, Users, Lightbulb } from 'lucide-react';
+import aboutImg from '../assets/about01.JPG';
 
 const About: React.FC = () => {
-  const aboutImages = import.meta.glob('../assets/about01.jpg', { eager: true, as: 'url' }) as Record<string, string>;
-  const aboutImageUrl = React.useMemo(() => {
-    const entries = Object.entries(aboutImages);
-    if (entries.length === 0) return '';
-    // Prefer files that include common names
-    const preferred = entries.find(([p]) => /about|profile|me|portrait|photo/i.test(p));
-    return (preferred ?? entries[0])[1];
-  }, []);
+  const aboutImageUrl = aboutImg;
   const highlights = [
     {
       icon: <Award className="w-6 h-6" />,
