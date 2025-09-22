@@ -1,67 +1,64 @@
 import React from 'react';
 import { Building, Calendar, Briefcase, Users } from 'lucide-react';
-const experienceLogos = import.meta.glob('../assets/education/*', { eager: true, as: 'url' }) as Record<string, string>;
+import kprLogo from '../assets/education/kpr.jfif?url';
+import lpuLogo from '../assets/education/lpu.png?url';
+import vcasLogo from '../assets/education/vcas.jfif?url';
+import wiproLogo from '../assets/education/wipro.svg?url';
+import cmsLogo from '../assets/education/cms.jfif?url';
 
 const Experience: React.FC = () => {
-  const resolveLogo = (logo: unknown): string => {
-    const src = typeof logo === 'string' ? logo : String(logo ?? '');
-    const lower = src.toLowerCase();
-    const token = ['kpr', 'lpu', 'vcas', 'wipro', 'cms'].find(t => lower.includes(t));
-    if (token) {
-      const match = Object.entries(experienceLogos).find(([path]) => path.toLowerCase().includes(token));
-      if (match) return match[1];
-    }
-    const base = lower.split('/').pop() || lower;
-    const nameOnly = base.replace(/\.[a-z0-9]+$/i, '');
-    const anyMatch = Object.entries(experienceLogos).find(([path]) => path.toLowerCase().includes(nameOnly));
-    if (anyMatch) return anyMatch[1];
-    return src;
+  type ExperienceItem = {
+    company: string;
+    role: string;
+    duration: string;
+    type: string;
+    logo: string;
   };
-  const academicExperience = [
+  const academicExperience: ExperienceItem[] = [
     {
       company: "KPR Institute of Engineering & Technology (KPR IET)",
       role: "Associate Professor",
       duration: "Present",
       type: "current",
-      logo: 'kpr'
+      logo: kprLogo
     },
     {
       company: "Lovely Professional University (LPU)",
       role: "Assistant Professor",
       duration: "2022 – 2025",
       type: "academic",
-      logo: 'lpu'
+      logo: lpuLogo
     },
     {
       company: "VCAS",
       role: "Head of Department",
       duration: "2018 – 2022",
       type: "academic",
-      logo: 'vcas'
+      logo: vcasLogo
     }
   ];
 
-  const industrialExperience = [
+  const industrialExperience: ExperienceItem[] = [
     {
       company: "Wipro InfoTech",
       role: "Project Engineer @ RBS BANK",
       duration: "2016 – 2018",
       type: "industry",
-      logo: 'wipro'
+      logo: wiproLogo
     },
     {
       company: "Wipro InfoTech",
       role: "Team Leader @ RBS BANK",
       duration: "2014 – 2016",
       type: "leadership",
-      logo: 'wipro'
+      logo: wiproLogo
     },
     {
       company: "CMS Info System",
       role: "Server Engineer",
       duration: "2012 – 2014",
       type: "technical",
-      logo: 'cms'
+      logo: cmsLogo
     }
   ];
 
@@ -119,7 +116,7 @@ const Experience: React.FC = () => {
         <div className="flex-shrink-0">
           <div className="w-16 h-16 bg-white rounded-lg flex items-center justify-center overflow-hidden shadow-lg border-2 border-gray-200 dark:border-gray-600">
             <img 
-              src={resolveLogo(item.logo)} 
+              src={item.logo} 
               alt={`${item.company} logo`}
               className="w-full h-full object-contain p-1"
               onError={(e) => {

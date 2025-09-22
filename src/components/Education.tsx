@@ -1,34 +1,28 @@
 import React from 'react';
 import { GraduationCap, Award, Calendar } from 'lucide-react';
-// Load all education assets via glob so build doesn't fail on case differences
-const educationLogos = import.meta.glob('../assets/education/*', { eager: true, as: 'url' }) as Record<string, string>;
+import issatLogo from '../assets/Education/issat-logo.png?url';
+import ugcLogo from '../assets/Education/ugc.jpg?url';
+import bharathLogo from '../assets/Education/logo_face_book.png?url';
+import kluLogo from '../assets/Education/klu.png?url';
 
 const Education: React.FC = () => {
-  const resolveLogo = (logo: unknown): string => {
-    const src = typeof logo === 'string' ? logo : String(logo ?? '');
-    const lower = src.toLowerCase();
-    // Try to find a matching asset by token
-    const token = ['issat', 'ugc', 'logo_face_book', 'klu'].find(t => lower.includes(t));
-    if (token) {
-      const match = Object.entries(educationLogos).find(([path]) => path.toLowerCase().includes(token));
-      if (match) return match[1];
-    }
-    // Fallback: try any asset that includes part of the filename
-    const base = lower.split('/').pop() || lower;
-    const nameOnly = base.replace(/\.[a-z0-9]+$/i, '');
-    const anyMatch = Object.entries(educationLogos).find(([path]) => path.toLowerCase().includes(nameOnly));
-    if (anyMatch) return anyMatch[1];
-    return src;
+  type EducationItem = {
+    institution: string;
+    degree: string;
+    year: string;
+    specialization?: string;
+    type: string;
+    logo: string;
   };
 
-  const educationData = [
+  const educationData: EducationItem[] = [
     {
       institution: "Alagappa University, Karaikudi",
       degree: "Doctor of Philosophy (Ph.D.) – Computer Science",
       year: "2024",
       specialization: "Artificial Intelligence & Machine Learning",
       type: "doctorate",
-      logo: 'issat-logo'
+      logo: issatLogo
     },
     {
       institution: "NTA UGC NET Exam (Computer Science & Applications)",
@@ -36,21 +30,21 @@ const Education: React.FC = () => {
       year: "2019",
       specialization: "Qualified with 95.8%",
       type: "certification",
-      logo: 'ugc'
+      logo: ugcLogo
     },
     {
       institution: "Bharath University, Chennai",
       degree: "Master of Technology (M.Tech.) – Computer Science & Engineering",
       year: "2017",
       type: "masters",
-      logo: 'logo_face_book'
+      logo: bharathLogo
     },
     {
       institution: "Kalasalingam University, Krishnankoil, Tamil Nadu",
       degree: "Bachelor of Technology (B.Tech.) – Computer Science & Engineering",
       year: "2012",
       type: "bachelors",
-      logo: 'klu'
+      logo: kluLogo
     }
   ];
 
@@ -122,7 +116,7 @@ const Education: React.FC = () => {
                   <div className="flex-shrink-0">
                     <div className="w-32 h-32 bg-white rounded-lg flex items-center justify-center overflow-hidden shadow-lg border-2 border-gray-200 dark:border-gray-600">
                       <img 
-                        src={resolveLogo(item.logo)} 
+                        src={item.logo} 
                         alt={`${item.institution} logo`}
                         className="w-full h-full object-contain p-2"
                         onError={(e) => {
