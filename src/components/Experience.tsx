@@ -1,10 +1,10 @@
 import React from 'react';
 import { Building, Calendar, Briefcase, Users } from 'lucide-react';
-import kprLogo from '../assets/education/kpr.jfif?url';
-import lpuLogo from '../assets/education/lpu.png?url';
-import vcasLogo from '../assets/education/vcas.jfif?url';
-import wiproLogo from '../assets/education/wipro.svg?url';
-import cmsLogo from '../assets/education/cms.jfif?url';
+import kprLogo from '../assets/education/kpr.jfif';
+import lpuLogo from '../assets/education/lpu.png';
+import vcasLogo from '../assets/education/vcas.jfif';
+import wiproLogo from '../assets/education/wipro.svg';
+import cmsLogo from '../assets/education/cms.jfif';
 
 const Experience: React.FC = () => {
   type ExperienceItem = {

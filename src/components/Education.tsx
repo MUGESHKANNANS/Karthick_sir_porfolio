@@ -1,9 +1,9 @@
 import React from 'react';
 import { GraduationCap, Award, Calendar } from 'lucide-react';
-import issatLogo from '../assets/Education/issat-logo.png?url';
-import ugcLogo from '../assets/Education/ugc.jpg?url';
-import bharathLogo from '../assets/Education/logo_face_book.png?url';
-import kluLogo from '../assets/Education/klu.png?url';
+import issatLogo from '../assets/Education/issat-logo.png';
+import ugcLogo from '../assets/Education/ugc.jpg';
+import bharathLogo from '../assets/Education/logo_face_book.png';
+import kluLogo from '../assets/Education/klu.png';
 
 const Education: React.FC = () => {
   type EducationItem = {
