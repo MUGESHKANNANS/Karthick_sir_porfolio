@@ -1,18 +1,23 @@
 import React from 'react';
 import { GraduationCap, Award, Calendar } from 'lucide-react';
-import issatLogo from '../assets/education/issat-logo.png';
-import ugcLogo from '../assets/education/ugc.jpg';
-import bharathLogo from '../assets/education/logo_face_book.png';
-import kluLogo from '../assets/education/klu.png';
+// Load all education assets via glob so build doesn't fail on case differences
+const educationLogos = import.meta.glob('../assets/education/*', { eager: true, as: 'url' }) as Record<string, string>;
 
 const Education: React.FC = () => {
   const resolveLogo = (logo: unknown): string => {
     const src = typeof logo === 'string' ? logo : String(logo ?? '');
     const lower = src.toLowerCase();
-    if (lower.includes('issat-logo')) return issatLogo;
-    if (lower.includes('ugc')) return ugcLogo;
-    if (lower.includes('logo_face_book')) return bharathLogo;
-    if (lower.includes('klu')) return kluLogo;
+    // Try to find a matching asset by token
+    const token = ['issat', 'ugc', 'logo_face_book', 'klu'].find(t => lower.includes(t));
+    if (token) {
+      const match = Object.entries(educationLogos).find(([path]) => path.toLowerCase().includes(token));
+      if (match) return match[1];
+    }
+    // Fallback: try any asset that includes part of the filename
+    const base = lower.split('/').pop() || lower;
+    const nameOnly = base.replace(/\.[a-z0-9]+$/i, '');
+    const anyMatch = Object.entries(educationLogos).find(([path]) => path.toLowerCase().includes(nameOnly));
+    if (anyMatch) return anyMatch[1];
     return src;
   };
 
@@ -23,7 +28,7 @@ const Education: React.FC = () => {
       year: "2024",
       specialization: "Artificial Intelligence & Machine Learning",
       type: "doctorate",
-      logo: {issatLogo}
+      logo: 'issat-logo'
     },
     {
       institution: "NTA UGC NET Exam (Computer Science & Applications)",
@@ -31,21 +36,21 @@ const Education: React.FC = () => {
       year: "2019",
       specialization: "Qualified with 95.8%",
       type: "certification",
-      logo: {ugcLogo}
+      logo: 'ugc'
     },
     {
       institution: "Bharath University, Chennai",
       degree: "Master of Technology (M.Tech.) – Computer Science & Engineering",
       year: "2017",
       type: "masters",
-      logo: {bharathLogo}
+      logo: 'logo_face_book'
     },
     {
       institution: "Kalasalingam University, Krishnankoil, Tamil Nadu",
       degree: "Bachelor of Technology (B.Tech.) – Computer Science & Engineering",
       year: "2012",
       type: "bachelors",
-      logo: {kluLogo}
+      logo: 'klu'
     }
   ];
 

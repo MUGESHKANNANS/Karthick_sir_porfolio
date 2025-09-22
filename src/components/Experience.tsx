@@ -1,20 +1,20 @@
 import React from 'react';
 import { Building, Calendar, Briefcase, Users } from 'lucide-react';
-import kprLogo from '../assets/education/kpr.jfif';
-import lpuLogo from '../assets/education/lpu.png';
-import vcasLogo from '../assets/education/vcas.jfif';
-import wiproLogo from '../assets/education/wipro.svg';
-import cmsLogo from '../assets/education/cms.jfif';
+const experienceLogos = import.meta.glob('../assets/education/*', { eager: true, as: 'url' }) as Record<string, string>;
 
 const Experience: React.FC = () => {
   const resolveLogo = (logo: unknown): string => {
     const src = typeof logo === 'string' ? logo : String(logo ?? '');
     const lower = src.toLowerCase();
-    if (lower.includes('kpr')) return kprLogo;
-    if (lower.includes('lpu')) return lpuLogo;
-    if (lower.includes('vcas')) return vcasLogo;
-    if (lower.includes('wipro')) return wiproLogo;
-    if (lower.includes('cms')) return cmsLogo;
+    const token = ['kpr', 'lpu', 'vcas', 'wipro', 'cms'].find(t => lower.includes(t));
+    if (token) {
+      const match = Object.entries(experienceLogos).find(([path]) => path.toLowerCase().includes(token));
+      if (match) return match[1];
+    }
+    const base = lower.split('/').pop() || lower;
+    const nameOnly = base.replace(/\.[a-z0-9]+$/i, '');
+    const anyMatch = Object.entries(experienceLogos).find(([path]) => path.toLowerCase().includes(nameOnly));
+    if (anyMatch) return anyMatch[1];
     return src;
   };
   const academicExperience = [
@@ -23,21 +23,21 @@ const Experience: React.FC = () => {
       role: "Associate Professor",
       duration: "Present",
       type: "current",
-      logo: {kprLogo}
+      logo: 'kpr'
     },
     {
       company: "Lovely Professional University (LPU)",
       role: "Assistant Professor",
       duration: "2022 – 2025",
       type: "academic",
-      logo: {lpuLogo}
+      logo: 'lpu'
     },
     {
       company: "VCAS",
       role: "Head of Department",
       duration: "2018 – 2022",
       type: "academic",
-      logo: {vcasLogo}
+      logo: 'vcas'
     }
   ];
 
@@ -47,21 +47,21 @@ const Experience: React.FC = () => {
       role: "Project Engineer @ RBS BANK",
       duration: "2016 – 2018",
       type: "industry",
-      logo: {wiproLogo}
+      logo: 'wipro'
     },
     {
       company: "Wipro InfoTech",
       role: "Team Leader @ RBS BANK",
       duration: "2014 – 2016",
       type: "leadership",
-      logo: {wiproLogo}
+      logo: 'wipro'
     },
     {
       company: "CMS Info System",
       role: "Server Engineer",
       duration: "2012 – 2014",
       type: "technical",
-      logo: {cmsLogo}
+      logo: 'cms'
     }
   ];
 
