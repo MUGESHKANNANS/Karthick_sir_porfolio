@@ -6,12 +6,14 @@ import bharathLogo from '../assets/education/logo_face_book.png';
 import kluLogo from '../assets/education/klu.png';
 
 const Education: React.FC = () => {
-  const resolveLogo = (logo: string): string => {
-    if (logo.includes('issat-logo')) return issatLogo;
-    if (logo.toLowerCase().includes('ugc')) return ugcLogo;
-    if (logo.toLowerCase().includes('logo_face_book')) return bharathLogo;
-    if (logo.toLowerCase().includes('klu')) return kluLogo;
-    return logo;
+  const resolveLogo = (logo: unknown): string => {
+    const src = typeof logo === 'string' ? logo : String(logo ?? '');
+    const lower = src.toLowerCase();
+    if (lower.includes('issat-logo')) return issatLogo;
+    if (lower.includes('ugc')) return ugcLogo;
+    if (lower.includes('logo_face_book')) return bharathLogo;
+    if (lower.includes('klu')) return kluLogo;
+    return src;
   };
 
   const educationData = [

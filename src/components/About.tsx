@@ -1,6 +1,6 @@
 import React from 'react';
 import { Award, BookOpen, Users, Lightbulb } from 'lucide-react';
-import aboutImg from '../assets/about01.JPG';
+import aboutImg from '../assets/about01.JPG?url';
 
 const About: React.FC = () => {
   const aboutImageUrl = aboutImg;

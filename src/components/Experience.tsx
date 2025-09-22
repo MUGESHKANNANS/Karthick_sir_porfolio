@@ -7,13 +7,15 @@ import wiproLogo from '../assets/education/wipro.svg';
 import cmsLogo from '../assets/education/cms.jfif';
 
 const Experience: React.FC = () => {
-  const resolveLogo = (logo: string): string => {
-    if (logo.toLowerCase().includes('kpr')) return kprLogo;
-    if (logo.toLowerCase().includes('lpu')) return lpuLogo;
-    if (logo.toLowerCase().includes('vcas')) return vcasLogo;
-    if (logo.toLowerCase().includes('wipro')) return wiproLogo;
-    if (logo.toLowerCase().includes('cms')) return cmsLogo;
-    return logo;
+  const resolveLogo = (logo: unknown): string => {
+    const src = typeof logo === 'string' ? logo : String(logo ?? '');
+    const lower = src.toLowerCase();
+    if (lower.includes('kpr')) return kprLogo;
+    if (lower.includes('lpu')) return lpuLogo;
+    if (lower.includes('vcas')) return vcasLogo;
+    if (lower.includes('wipro')) return wiproLogo;
+    if (lower.includes('cms')) return cmsLogo;
+    return src;
   };
   const academicExperience = [
     {
